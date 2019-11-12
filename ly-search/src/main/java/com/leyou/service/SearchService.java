@@ -11,11 +11,8 @@ import com.leyou.dto.SearchRequest;
 import com.leyou.pojo.Goods;
 import com.leyou.pojo.dto.*;
 import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -24,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
-import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -275,7 +271,7 @@ public class SearchService {
 
         }*/
 
-        List<Long> bidList = categoryAgg.getBuckets()
+        List<Long> bidList = brandAgg.getBuckets()
                 .stream()
                 .map(Terms.Bucket::getKeyAsNumber)
                 .map(Number::longValue)

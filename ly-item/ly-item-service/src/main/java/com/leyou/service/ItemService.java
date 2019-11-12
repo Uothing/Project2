@@ -17,7 +17,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @version V1.0
@@ -101,5 +103,25 @@ public class ItemService {
 
         //返回DTO
         return BeanHelper.copyWithCollection(specParamList, SpecParamDTO.class);
+    }
+
+    /**
+     * 查询规格参数组，及组内参数
+     * @param id 商品分类id
+     * @return 规格组及组内参数
+     */
+    public List<SpecGroupDTO> querySpecsByCid(Long id) {
+        // 查询规格组
+        List<SpecGroupDTO> groupList = queryGroupById(id);
+        // 查询分类下所有规格参数
+        List<SpecParamDTO> params = queryGroupItemById(null, id, null);
+        // 将规格参数按照groupId进行分组，得到每个group下的param的集合
+        Map<Long, List<SpecParamDTO>> paramMap = params.stream()
+                .collect(Collectors.groupingBy(SpecParamDTO::getGroupId));
+        // 填写到group中
+        for (SpecGroupDTO groupDTO : groupList) {
+            groupDTO.setParams(paramMap.get(groupDTO.getId()));
+        }
+        return groupList;
     }
 }

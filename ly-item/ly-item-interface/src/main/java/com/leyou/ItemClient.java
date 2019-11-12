@@ -85,4 +85,20 @@ public interface ItemClient {
      */
     @GetMapping("/brand/list")
     List<BrandDTO> queryBrandByIds(@RequestParam("ids") List<Long> idList);
+
+    /**
+     * 根据spu的id查询spu
+     * @param id
+     * @return
+     */
+    @GetMapping("spu/{id}")
+    SpuDTO querySpuById(@PathVariable("id") Long id);
+
+    /**
+     * 查询规格参数组，及组内参数
+     * @param id 商品分类id
+     * @return 规格组及组内参数
+     */
+    @GetMapping("/spec/of/category")
+    List<SpecGroupDTO> querySpecsByCid(@RequestParam("id") Long id);
 }

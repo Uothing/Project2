@@ -247,4 +247,15 @@ public class GoodsService {
         }
 
     }
+
+    public SpuDTO querySpuById(Long id) {
+        // 查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(id);
+        SpuDTO spuDTO = BeanHelper.copyProperties(spu, SpuDTO.class);
+        // 查询spuDetail
+        spuDTO.setSpuDetail(returnGoodsDetail(id));
+        // 查询sku
+        spuDTO.setSkus(returnGoodsDetailSku(id));
+        return spuDTO;
+    }
 }

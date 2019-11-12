@@ -2,6 +2,8 @@ package com.leyou.pojo.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @version V1.0
  * @author: weiyuan
@@ -17,4 +19,5 @@ public class SpecGroupDTO {
 
     private String name;
 
+    private List<SpecParamDTO> params;
 }

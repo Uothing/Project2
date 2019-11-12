@@ -53,4 +53,14 @@ public class ItemController {
         return ResponseEntity
                 .ok(itemService.queryGroupItemById(gid, cid, searching));
     }
+
+    /**
+     * 查询规格参数组，及组内参数
+     * @param id 商品分类id
+     * @return 规格组及组内参数
+     */
+    @GetMapping("/of/category")
+    public ResponseEntity<List<SpecGroupDTO>> querySpecsByCid(@RequestParam("id") Long id){
+        return ResponseEntity.ok(itemService.querySpecsByCid(id));
+    }
 }
