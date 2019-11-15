@@ -10,6 +10,7 @@ import com.leyou.dto.GoodsDTO;
 import com.leyou.dto.SearchRequest;
 import com.leyou.pojo.Goods;
 import com.leyou.pojo.dto.*;
+import com.leyou.repository.GoodsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -279,5 +280,21 @@ public class SearchService {
         List<BrandDTO> brandDTOList = itemClient.queryBrandByIds(bidList);
         filters.put("品牌", brandDTOList);
         return filters;
+    }
+
+
+    @Autowired
+    private GoodsRepository goodsRepository;
+
+    public void createIndex(Long id){
+        // 查询spu
+        SpuDTO spu = itemClient.querySpuById(id);
+        // 构建成goods对象
+        Goods goods = buildGoods(spu);
+        // 保存数据到索引库
+        goodsRepository.save(goods);
+    }
+    public void deleteById(Long id) {
+        goodsRepository.deleteById(id);
     }
 }

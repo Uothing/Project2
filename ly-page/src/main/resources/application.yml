@@ -1,10 +1,15 @@
 server:
-  port: 8084
+  port: 8085
 spring:
   application:
     name: page-service
   thymeleaf:
     cache: false
+  rabbitmq:
+    host: 192.168.86.101
+    username: wei
+    password: wei
+    virtual-host: /
 eureka:
   client:
     service-url:

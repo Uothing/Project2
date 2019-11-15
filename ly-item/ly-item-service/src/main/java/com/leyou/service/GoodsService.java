@@ -12,6 +12,7 @@ import com.leyou.item.entity.SpuDetail;
 import com.leyou.mapper.*;
 import com.leyou.pojo.dto.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,10 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+
+import static com.leyou.common.constants.MQConstants.RoutingKey.*;
+import static com.leyou.common.constants.MQConstants.Exchange.*;
 
 /**
  * @version V1.0
@@ -141,6 +146,9 @@ public class GoodsService {
     }
 
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
     //上下架商品
     public void unsaleGoods(Long id, Boolean saleable) {
 
@@ -169,6 +177,10 @@ public class GoodsService {
         if (count != size) {
             throw new LyException(ExceptionEnum.UPDATE_OPERATION_FAIL);
         }
+
+        //发送mq
+        String key = saleable ? ITEM_UP_KEY :  ITEM_DOWN_KEY;
+        amqpTemplate.convertAndSend(ITEM_EXCHANGE_NAME, key, id);
     }
 
 

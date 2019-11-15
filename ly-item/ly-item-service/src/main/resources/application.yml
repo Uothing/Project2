@@ -8,6 +8,19 @@ spring:
     url: jdbc:mysql://localhost:3306/leyou
     username: root
     password: root
+  rabbitmq:
+    host: 192.168.86.101
+    username: wei
+    password: wei
+    virtual-host: /
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 80000ms
+        multiplier: 2
+    publisher-confirms: true
+
 eureka:
   client:
     service-url:
