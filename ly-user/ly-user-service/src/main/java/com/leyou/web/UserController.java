@@ -1,6 +1,8 @@
 package com.leyou.web;
 
+import com.leyou.entity.User;
 import com.leyou.service.UserService;
+import com.leyou.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +31,19 @@ public class UserController {
     public ResponseEntity<Void> sendCode(@RequestParam("phone") String phone) {
         userService.sendCode(phone);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    //注册
+    @PostMapping("register")
+    public ResponseEntity<Void> register(User user, @RequestParam("code") String code){
+        userService.register(user, code);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //根据用户名密码查找
+    @GetMapping("query")
+    public ResponseEntity<UserDTO> queryUserByUsernameAndPassword(
+            @RequestParam("username") String username, @RequestParam("password") String password){
+        return ResponseEntity.ok(userService.queryUserByUsernameAndPassword(username, password));
     }
 }

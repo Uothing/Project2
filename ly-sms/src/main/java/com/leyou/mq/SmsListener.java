@@ -2,9 +2,7 @@ package com.leyou.mq;
 
 import com.leyou.common.constants.MQConstants;
 import com.leyou.common.utils.RegexUtils;
-import com.leyou.config.SmsConfiguration;
 import com.leyou.config.SmsProperties;
-import com.leyou.constants.SmsConstants;
 import com.leyou.utils.SmsHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
@@ -64,6 +62,6 @@ public class SmsListener {
 
         String param = "{\"code\": \""+code+"\"}";
 
-        smsHelper.sendMessage(phone, smsProperties.getSignName(), smsProperties.getVerifyCodeTemplate(), param );
+        smsHelper.sendMessage(phone, smsProperties.getSignName(), smsProperties.getVerifyCodeTemplate(), param);
     }
 }
