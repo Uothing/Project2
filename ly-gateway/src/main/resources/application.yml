@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: ly-gateway
+  redis:
+    host: 192.168.86.101
 eureka:
   client:
     service-url:
@@ -15,9 +17,6 @@ hystrix:
 ribbon:
   ConnectTimeout: 500 # ribbon链接超时时长
   ReadTimeout: 2000 # ribbon读取超时时长
-  MaxAutoRetries: 0 # 当前服务重试次数
-  MaxAutoRetriesNextServer: 1 # 切换服务重试次数
-  OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试，只对get请求重试
 zuul:
   prefix: /api
   routes:
@@ -26,3 +25,20 @@ zuul:
     search-service: /search/**
     user-service: /user/**
     auth-service: /auth/**
+    cart-service: /cart/**
+  sensitive-headers:
+ly:
+  jwt:
+    pubKeyPath: E:/Course/ssh/id_rsa.pub # C:/develop/ssh/id_rsa.pub # 公钥地址
+    user:
+      cookieName: LY_TOKEN # cookie名称
+  filter:
+    allowPaths:
+    - "*:/api/auth/login"
+    - "*:/api/auth/verify"
+    - "*:/api/search/page"
+    - "*:/api/search/filter"
+    - "*:/api/user/register"
+    - "*:/api/user/code"
+    - "*:/api/user/check"
+    - "Get:/api/item"

@@ -270,4 +270,17 @@ public class GoodsService {
         spuDTO.setSkus(returnGoodsDetailSku(id));
         return spuDTO;
     }
+
+
+    // 根据sku的ids批量查询sku
+    public List<SkuDTO> querySkuByIds(List<Long> ids) {
+
+        // 查询sku
+        List<Sku> skuList = skuMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(skuList)) {
+            throw new LyException(ExceptionEnum.GOODS_NOT_FOUND);
+        }
+
+        return BeanHelper.copyWithCollection(skuList, SkuDTO.class);
+    }
 }
