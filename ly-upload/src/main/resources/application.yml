@@ -16,7 +16,7 @@ eureka:
 
 ly:
   oss:
-    accessKeyId: LTAI4FoqSg91SciyUncLZ4t9
+    accessKeyId: LTAI4FoqSg91SciyUnc------------LZ4t----9------
     accessKeySecret: OUUdhpR67p8ntLkjq7l6yKoQG0bebP
     host: http://leyouwei.oss-cn-beijing.aliyuncs.com # 访问oss的域名，很重要bucket + endpoint
     endpoint: oss-cn-beijing.aliyuncs.com # 你的服务的端点，不一定跟我一样
